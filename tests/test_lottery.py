@@ -8,6 +8,6 @@ def test_get_entrance_fee():
         config["networks"][network.show_active()]["eth_usd_price_feed"],
         {"from": account},
     )
-    lottery.get_entrance_fee()
-    assert lottery.getEntraceFee() > Web3.toWei(0.018, "ether")
-    assert lottery.getEntraceFee() < Web3.toWei(0.022, "ether")
+    lottery.getEntranceFee()
+    assert lottery.getEntranceFee() > Web3.toWei(0.013, "ether")
+    assert lottery.getEntranceFee() < Web3.toWei(0.016, "ether")
