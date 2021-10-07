@@ -1,4 +1,4 @@
-from scripts.helpful_scripts import get_account, get_contract
+from scripts.helpful_scripts import fund_with_link, get_account, get_contract
 from brownie import Lottery, config, network
 
 
@@ -36,6 +36,13 @@ def enter_lottery():
 
 def end_lottery():
     account = get_account()
+    lottery = Lottery[-1]
+    # fund the contract
+    # then end the lottery
+    tx = fund_with_link(lottery.address)
+    tx.wait(1)
+    ending_transaction = lottery.endLottery({"from": account})
+    ending_transaction.wait(1)
 
 
 def main():
