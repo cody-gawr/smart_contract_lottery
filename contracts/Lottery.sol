@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Lottery is Ownable, VRFConsumerBase {
     address payable[] public players;
-    address payable recentWinner;
+    address payable public recentWinner;
     uint256 public usdEntryFee;
     AggregatorV3Interface internal ethUsdPriceFeed;
     enum LOTTERY_STATE {
@@ -19,6 +19,7 @@ contract Lottery is Ownable, VRFConsumerBase {
     uint256 public fee;
     bytes32 public keyhash;
     uint256 public randomness;
+    event RequestRandomness(bytes32 requestId);
 
     constructor(
         address _priceFeedAddress,
@@ -63,6 +64,7 @@ contract Lottery is Ownable, VRFConsumerBase {
     function endLottery() public onlyOwner {
         lottery_state = LOTTERY_STATE.CALCULATING_WINNER;
         bytes32 requestId = requestRandomness(keyhash, fee);
+        emit RequestRandomness(requestId);
     }
 
     function fulfillRandomness(bytes32 _requestId, uint256 _randomness)
